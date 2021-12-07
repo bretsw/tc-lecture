@@ -1,0 +1,336 @@
+---
+title: "Module 8: Case Discussions"
+subtitle: "EME6356: Learning & Web Analytics"
+author: "Dr. Bret Staudt Willet"
+date: "November 9, 2021"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    seal: true
+    css: [default, 'custom.css', 'custom-fonts.css']
+    nature:
+      titleSlideClass: [left, bottom]
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+usethis::use_git_ignore(c("*.csv", "*.rds"))
+options(htmltools.dir.version = FALSE)
+
+library(knitr)
+library(tidyverse)
+library(xaringan)
+library(fontawesome)
+```
+
+class: inverse, center, middle
+
+# `r fa("far fa-images", fill = "#fff")`
+
+**View the slides:** 
+
+[bretsw.github.io/eme6356-module8](https://bretsw.github.io/eme6356-module8)
+
+---
+
+class: inverse, center, middle
+
+# `r fa("fas fa-user-astronaut", fill = "#fff")` <br> Special Guest: <br> Shamichael Hallman
+
+---
+
+# Shamichael Hallman
+
+```{r, out.width = "480px", echo = FALSE, fig.align = "center"}
+include_graphics("img/8-Shamichael-Hallman.jpg")
+```
+
+<div class="caption">
+<a href="https://www.linkedin.com/in/shamichael/">Shamichael Hallman on Linkedin</a>
+</div>
+
+---
+
+# Data Stories
+
+```{r, out.width = "420px", echo = FALSE, fig.align = "center"}
+include_graphics("img/8-data-story.png")
+```
+
+"When using this data tool, users must keep in mind:" (Tweet from [@brad_weiner](https://twitter.com/brad_weiner/status/1456281776423194628))
+
+---
+
+class: inverse, center, middle
+
+# `r fa("far fa-comments", fill = "#fff")` <br> Module 7 Discussion
+
+---
+
+# Sharing Kudos
+
+```{r, out.width = "600px", echo = FALSE, fig.align = "center"}
+include_graphics("img/applause.jpg")
+```
+
+--
+
+Kudos for sharing example of CPR mannequins:
+
+- `r fa("thumbs-up", fill = "#782F40")` Carla
+
+---
+
+class: inverse, center, middle
+
+#  `r fa("fas fa-exclamation-circle", fill = "#fff")` <br> Analytics Challenge \#1: <br> **"Participant" "Rights"**
+
+---
+
+# Privacy
+
+```{r, out.width = "600px", echo = FALSE, fig.align = "center"}
+include_graphics("img/surveillance.jpg")
+```
+
+--
+
+- What rights to live and behave from observation?
+
+--
+
+- Opt-in, or opt-out?
+
+---
+
+# Ownership
+
+```{r, out.width = "560px", echo = FALSE, fig.align = "center"}
+include_graphics("img/sale.jpg")
+```
+
+--
+
+- Who **controls** my data?
+
+--
+
+- Who **profits** from it?
+
+---
+
+# Agency
+
+```{r, out.width = "420px", echo = FALSE, fig.align = "center"}
+include_graphics("img/step.jpg")
+```
+
+--
+
+- How much initiative can be expected?
+
+--
+
+- How does the need to be purposeful fall unevenly?
+
+---
+
+class: inverse, center, middle
+
+#  `r fa("fas fa-exclamation-circle", fill = "#fff")` <br> Analytics Challenge \#2: <br> **Ethical Use of Data**
+
+---
+
+# Consent
+
+```{r, out.width = "600px", echo = FALSE, fig.align = "center"}
+include_graphics("img/park.jpg")
+```
+
+--
+
+- Should we ask people for consent to observe them?
+
+--
+
+- What are their expectations for being in public?
+
+--
+
+- What is ok to collect? What forms of analysis are ethical?
+
+---
+
+# Transparency
+
+```{r, out.width = "600px", echo = FALSE, fig.align = "center"}
+include_graphics("img/park.jpg")
+```
+
+--
+
+- Those who collect data should be open about when collecting or observing
+
+--
+
+- Analysis should be open as well
+
+---
+
+# Regulation
+
+```{r, out.width = "600px", echo = FALSE, fig.align = "center"}
+include_graphics("img/park.jpg")
+```
+
+--
+
+- Transparency is not enough: need regulation or moderation
+
+--
+
+- Peer/community review, government oversight, etc.
+
+---
+
+class: inverse, center, middle
+
+#  `r fa("fas fa-exclamation-circle", fill = "#fff")` <br> Analytics Challenge \#3: <br> **Real Impact**
+
+---
+
+# Impact on Teaching/Training
+
+```{r, out.width = "600px", echo = FALSE, fig.align = "center"}
+include_graphics("img/help.jpg")
+```
+
+--
+
+- Feedback needs to immediate, clear, and actionable
+
+--
+
+- Give **teachers/instructors** a voice in identifying key performance indicators
+
+---
+
+# Impact on Learning/Performance
+
+```{r, out.width = "600px", echo = FALSE, fig.align = "center"}
+include_graphics("img/help.jpg")
+```
+
+--
+
+- Feedback needs to immediate, clear, and actionable (e.g., adaptive learning)
+
+--
+
+- Give **students/learners** options for filtering analyses
+
+---
+
+# Impact on Institutions
+
+```{r, out.width = "600px", echo = FALSE, fig.align = "center"}
+include_graphics("img/help.jpg")
+```
+
+--
+
+- Should benefit to institutions be primary or secondary?
+
+---
+
+class: inverse, center, middle
+
+# `r fa("fas fa-binoculars", fill = "#fff")` <br> Looking Ahead
+
+---
+
+# Semester schedule
+
+```{r, out.width = "100%", echo = FALSE, fig.align = "center"}
+include_graphics("img/across-time.jpg")
+```
+
+- Module 9: Future of Analytics
+
+--
+
+(Thanksgiving week is "off")
+
+--
+
+### Classes end Friday, Dec 3
+
+---
+
+# Analytics Problem Plan
+
+```{r, out.width = "520px", echo = FALSE, fig.align = "center"}
+include_graphics("img/planning.jpg")
+```
+
+--
+
+- Should feel similar to the three Analytics Practice Assignments you completed
+
+--
+
+- But not doing any analysis this time, just going into more detail for the plan
+
+--
+
+### Due Friday, Dec 10
+
+---
+
+# Final Course Meeting
+
+```{r, out.width = "420px", echo = FALSE, fig.align = "center"}
+include_graphics("img/community.jpg")
+```
+
+--
+
+### Tuesday, Nov 30
+
+--
+
+Talking through:
+
+- Future of analytics
+
+--
+
+- Your own takeaways from this course
+
+--
+
+- The course elements that have been most impactful
+
+--
+
+- Suggestions for future iterations
+
+---
+
+class: inverse, center, middle
+
+# Questions?
+
+```{r, out.width = "480px", echo = FALSE, fig.align = "center"}
+include_graphics("img/question.jpg")
+```
+
+**What questions can I answer for you now?**
+
+**How can I support you this week?**
+
+<hr>
+
+`r fa("envelope", fill = "white")` [bret.staudtwillet@fsu.edu](mailto:bret.staudtwillet@fsu.edu) | `r fa("twitter", fill = "white")` [@bretsw](https://twitter.com/bretsw) | `r fa("globe", fill = "white")` [bretsw.com](http://bretsw.com)

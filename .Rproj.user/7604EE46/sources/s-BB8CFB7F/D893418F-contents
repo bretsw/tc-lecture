@@ -1,0 +1,559 @@
+---
+title: "Module 5: Visualization"
+subtitle: "EME6356: Learning & Web Analytics"
+author: "Dr. Bret Staudt Willet"
+date: "October 5, 2021"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    seal: true
+    css: [default, 'custom.css', 'custom-fonts.css']
+    nature:
+      titleSlideClass: [left, bottom]
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+usethis::use_git_ignore(c("*.csv", "*.rds"))
+options(htmltools.dir.version = FALSE)
+
+library(knitr)
+library(tidyverse)
+library(xaringan)
+library(fontawesome)
+```
+
+class: inverse, center, middle
+
+**View the slides:** 
+
+[bretsw.github.io/eme6356-module5](https://bretsw.github.io/eme6356-module5)
+
+---
+
+# Data stories
+
+```{r, out.width = "420px", echo = FALSE, fig.align = "center"}
+include_graphics("img/dashboards-tweet.png")
+```
+
+>"Dashboards...alert you to something you should pay attention to. But most of the time they don’t tell you what’s actually happening and they certainly don’t tell you why something is happening."
+>
+>[@ry_estrellado on locking in the use of data dashboards](https://ryanestrellado.com/how-to-measure-what-matters)
+
+(Tweet from [@john_reyes](https://twitter.com/john_reyes/status/1442854996328976392))
+
+---
+
+class: inverse, center, middle
+
+# Special Guest: <br> Dr. Gerald Ardito
+
+---
+
+# Dr. Gerald Ardito
+
+```{r, out.width = "420px", echo = FALSE, fig.align = "center"}
+include_graphics("img/5-gerald-ardito.jpg")
+```
+
+---
+
+# Viz Example 1
+
+```{r, out.width = "600px", echo = FALSE, fig.align = "center"}
+include_graphics("img/5-viz1.png")
+```
+
+---
+
+# Viz Example 2
+
+```{r, out.width = "720px", echo = FALSE, fig.align = "center"}
+include_graphics("img/5-viz2.png")
+```
+
+---
+
+# Viz Example 3
+
+```{r, out.width = "100%", echo = FALSE, fig.align = "center"}
+include_graphics("img/5-viz3.png")
+```
+
+---
+
+# Viz Example 4
+
+```{r, out.width = "100%", echo = FALSE, fig.align = "center"}
+include_graphics("img/5-viz4-Round1_LinkingPhrases.png")
+```
+
+---
+
+# Viz Example 5
+
+```{r, out.width = "640px", echo = FALSE, fig.align = "center"}
+include_graphics("img/5-viz5-The-Outsiders.png")
+```
+
+---
+
+# Viz Example 6
+
+```{r, out.width = "100%", echo = FALSE, fig.align = "center"}
+include_graphics("img/5-viz6-Learning Activities Coded for Blooms Skills.png")
+```
+
+---
+
+# Viz Example 7
+
+```{r, out.width = "540px", echo = FALSE, fig.align = "center"}
+include_graphics("img/5-viz7-China-Lake.png")
+```
+
+---
+
+# Viz Example 8
+
+```{r, out.width = "100%", echo = FALSE, fig.align = "center"}
+include_graphics("img/5-viz8-Good4U.png")
+```
+
+---
+
+# Viz Example 9
+
+```{r, out.width = "100%", echo = FALSE, fig.align = "center"}
+include_graphics("img/5-viz9-post-education-plot-polar.png")
+```
+
+---
+
+# Viz Example 10
+
+```{r, out.width = "100%", echo = FALSE, fig.align = "center"}
+include_graphics("img/5-viz10-post-plot-radar.png")
+```
+
+---
+
+# Viz Example 11
+
+```{r, out.width = "480px", echo = FALSE, fig.align = "center"}
+include_graphics("img/5-viz11-post-plot-bar.png")
+```
+
+---
+
+# Viz Example 12
+
+```{r, out.width = "100%", echo = FALSE, fig.align = "center"}
+include_graphics("img/5-viz12-post-degree-plot.png")
+```
+
+---
+
+# Viz Example 13
+
+```{r, out.width = "100%", echo = FALSE, fig.align = "center"}
+include_graphics("img/5-viz13-post-degree-plot.png")
+```
+
+---
+
+class: inverse, center, middle
+
+# Assignment: <br> Analytics Practice
+
+---
+
+# Visualize Over Time: Grid
+
+```{r, eval=FALSE, include=FALSE}
+library(tidyverse)
+library(lubridate)
+library(fitbitr)
+
+generate_token(client_id = Sys.getenv('FITBIT_CLIENT_ID'), 
+               client_secret = Sys.getenv('FITBIT_CLIENT_SECRET')
+)
+
+health_df = NULL
+
+for (i in 1:31) {
+  new_row =
+    tibble(date = lubridate::today() - i,
+           resting_hr = activity_summary(date)$resting_heart_rate,
+           steps = activity_summary(date)$steps
+           )
+  health_df <-
+    health_df %>%
+    bind_rows(new_row)
+}
+
+write_csv(health_df, file = "health-data.csv")
+```
+
+```{r, out.width = "540px", message=FALSE, warning=FALSE, echo=FALSE, fig.align = "center"}
+library(cowplot)
+health_df <- read_csv("health-data.csv")
+
+viz_hr <-
+  ggplot(health_df, aes(x=date, y=resting_hr)) +
+  geom_point() +
+  geom_smooth() +
+  xlab(NULL) +
+  ylab("Beats per Minute") +
+  ggtitle("Resting Heart Rate") +
+  theme_bw()
+
+viz_steps <-
+  ggplot(health_df, aes(x=date, y=steps)) +
+  geom_point() +
+  geom_smooth() +
+  xlab(NULL) +
+  ylab("Steps per Day") +
+  ggtitle("Number of Daily Steps") +
+  theme_bw()
+
+cowplot::plot_grid(viz_hr, viz_steps, cols = 1)
+```
+
+---
+
+# Visualize Comparison
+
+```{r, out.width = "540px", echo=FALSE, message=FALSE, warning=FALSE, fig.align = "center"}
+ggplot(health_df, aes(x=steps, y=resting_hr)) +
+  geom_point() +
+  geom_smooth(method = 'lm') +
+  xlab("Steps per Day") +
+  ylab("Beats per Minute while Resting") +
+  ggtitle(" Resting Heart Rate vs. Daily Steps") +
+  theme_bw()
+```
+
+---
+
+class: inverse, center, middle
+
+# Module 4 Discussion <br> into Module 5
+
+---
+
+# Sharing Kudos
+
+```{r, out.width = "540px", echo = FALSE, fig.align = "center"}
+include_graphics("img/applause.jpg")
+```
+
+--
+
+- For creating and sustaining highly engaging threads:`r fa("thumbs-up", fill = "#782F40")` Dré, `r fa("thumbs-up", fill = "#782F40")` Kent
+
+--
+
+- For looking up and bringing in extra info: `r fa("thumbs-up", fill = "#782F40")` Carla (social media facts, justice.gov)
+
+---
+
+class: inverse, center, middle
+
+#  Big Idea \#1: <br> **Possibilities** <br> of Social Media
+
+---
+
+# Possibilities
+
+```{r, out.width = "480px", echo = FALSE, fig.align = "center"}
+include_graphics("img/magic.jpg")
+```
+
+--
+
+- Resources!
+
+--
+
+- Networking!
+
+--
+
+- Ease-of-use!
+
+--
+
+- Innovation!
+
+---
+
+class: inverse, center, middle
+
+#  Big Idea \#2: <br> **Perils** <br> of Social Media
+
+---
+
+# Perils
+
+```{r, out.width = "480px", echo = FALSE, fig.align = "center"}
+include_graphics("img/broken-window.jpg")
+```
+
+--
+
+- Resources! `r fa("arrow-right", fill = "#782F40")` Quality `r fa("far fa-grimace", fill = "#782F40")` (inclusivity, misinformation)
+
+--
+
+- Networking! `r fa("arrow-right", fill = "#782F40")` Footprint `r fa("far fa-grimace", fill = "#782F40")` (privacy, surveillance)
+
+--
+
+- Ease-of-use! `r fa("arrow-right", fill = "#782F40")` Profit `r fa("far fa-grimace", fill = "#782F40")` (oil, algorithms)
+
+--
+
+- Innovation! `r fa("arrow-right", fill = "#782F40")` Bugs `r fa("far fa-grimace", fill = "#782F40")` (code breaks, WhatsApp crash)
+
+---
+
+class: inverse, center, middle
+
+#  Big Idea \#3: <br> **Amplification** <br> of Possibilities & Perils
+
+---
+
+# Amplification
+
+```{r, out.width = "450px", echo = FALSE, fig.align = "center"}
+include_graphics("img/amplify.jpg")
+```
+
+--
+
+- Resources! `r fa("arrow-right", fill = "#782F40")` Quality `r fa("far fa-grimace", fill = "#782F40")` (inclusivity, misinformation)
+
+- Networking! `r fa("arrow-right", fill = "#782F40")` Footprint `r fa("far fa-grimace", fill = "#782F40")` (privacy, surveillance)
+
+- Ease-of-use! `r fa("arrow-right", fill = "#782F40")` Profit `r fa("far fa-grimace", fill = "#782F40")` (oil, algorithms)
+
+- Innovation! `r fa("arrow-right", fill = "#782F40")` Bugs `r fa("far fa-grimace", fill = "#782F40")` (code breaks, WhatsApp crash)
+
+--
+
+### `r fa("bullhorn", fill = "#782F40")` Amplified! `r fa("bullhorn", fill = "#782F40")`
+
+---
+
+class: inverse, center, middle
+
+# Big Ideas 
+
+### 1. Possibilities <br> 2. Perils <br> 3. Amplification
+
+---
+
+class: inverse, center, middle
+
+# Recommendation \#1 <br> Literacy & Curation
+
+---
+
+# Content Moderation
+
+```{r, out.width = "480px", echo = FALSE, fig.align = "center"}
+include_graphics("img/cut.jpg")
+```
+
+--
+
+- Resources on TeachersPayTeachers.com
+
+--
+
+  - Misinformation, racism, accessibility
+
+--
+
+- Differences between subreddits
+
+--
+
+  - Dependent upon volunteer moderators
+
+---
+
+# Balance
+
+```{r, out.width = "480px", echo = FALSE, fig.align = "center"}
+include_graphics("img/traffic.jpg")
+```
+
+--
+
+- Traffic data: for [planning road projects](https://www.talgov.com/projects/projects.aspxs) vs. tracking one person
+
+--
+
+- Linking to resources in the [FSU library](https://www.lib.fsu.edu/)
+
+--
+
+- [Florida voter recorders](https://voterrecords.com/)
+
+--
+
+- [State of Florida payroll](https://www.floridahasarighttoknow.myflorida.com/search_state_payroll)
+
+--
+
+- Balance privacy and open science ([Rosenberg & Staudt Willet, 2021](https://doi.org/10.1007/s11423-020-09860-8))
+
+---
+
+# Affinity
+
+```{r, out.width = "600px", echo = FALSE, fig.align = "center"}
+include_graphics("img/community.jpg")
+```
+
+--
+
+- Twitter [\#Edchat](https://twitter.com/search?q=%23Edchat&src=typed_query&f=live) vs. [\#NGSSchat](https://twitter.com/search?q=%23NGSSchat&src=typed_query&f=live)
+
+--
+
+- Reddit [r/Teachers](https://www.reddit.com/r/Teachers/) vs. [r/education](https://www.reddit.com/r/education/)
+
+---
+
+# Regulation
+
+```{r, out.width = "540px", echo = FALSE, fig.align = "center"}
+include_graphics("img/community.jpg")
+```
+
+--
+
+- **Pay-to-play** with [Zillow](https://www.zillow.com/z/partners/advertise/) listings
+
+--
+
+- You are either the **customer** ([Google Cloud Platform](https://cloud.google.com/pricing)) or the **product** ([Google search engine](https://www.google.com/))
+
+--
+
+### `r fa("arrow-right", fill = "#782F40")` Need balance in the form of regulation
+
+---
+
+class: inverse, center, middle
+
+# Recommendation \#2 <br> Ethical Research
+
+---
+
+# Research
+
+```{r, out.width = "540px", echo = FALSE, fig.align = "center"}
+include_graphics("img/survey.jpg")
+```
+
+--
+
+- Ethical research: Protect participants
+
+--
+
+- Transparent research: 
+
+--
+
+  - Share code ([GitHub](https://github.com/bretsw/))
+  
+--
+  
+  - Share data ([Open Science Framework](https://osf.io/m25zy/))
+
+---
+
+class: inverse, center, middle
+
+# Big Ideas <br> and Recommendations
+
+---
+
+# Recap
+
+```{r, out.width = "320px", echo = FALSE, fig.align = "center"}
+include_graphics("img/puzzle-gap.jpg")
+```
+
+--
+
+### Big Ideas
+
+1. Possibilities of social media
+
+2. Perils of social media
+
+3. Amplification of both
+
+--
+
+### Recommendations
+
+1. Literacy & Curation
+
+2. Research
+
+---
+
+class: inverse, center, middle
+
+<div class="padlet-embed" style="border:1px solid rgba(0,0,0,0.1);border-radius:2px;box-sizing:border-box;overflow:hidden;position:relative;width:100%;background:#F4F4F4"><p style="padding:0;margin:0"><iframe src="https://fsu.padlet.org/embed/b34jsotpqn08kabr" frameborder="0" allow="camera;microphone;geolocation" style="width:100%;height:480px;display:block;padding:0;margin:0"></iframe></p><div style="padding:8px;text-align:right;margin:0;"><a href="https://padlet.com?ref=embed" style="padding:0;margin:0;border:none;display:block;line-height:1;height:16px" target="_blank"><img src="https://padlet.net/embeds/made_with_padlet.png" width="86" height="16" style="padding:0;margin:0;background:none;border:none;display:inline;box-shadow:none" alt="Made with Padlet"></a></div></div>
+
+
+---
+
+class: inverse, center, middle
+
+# Looking ahead
+
+---
+
+# Semester schedule
+
+```{r, out.width = "100%", echo = FALSE, fig.align = "center"}
+include_graphics("img/across-time.jpg")
+```
+
+- Module 6: Educational Data Mining and Learning Analytics
+
+- Module 7: Challenges in Learning Analytics
+
+- Module 8: Case Discussions
+
+- Module 9: Future of Analytics
+
+---
+
+class: inverse, center, middle
+
+# Questions?
+
+```{r, out.width = "480px", echo = FALSE, fig.align = "center"}
+include_graphics("img/question.jpg")
+```
+
+**What questions can I answer for you now?**
+
+**How can I support you this week?**
+
+<hr>
+
+`r fa("envelope", fill = "white")` [bret.staudtwillet@fsu.edu](mailto:bret.staudtwillet@fsu.edu) | `r fa("twitter", fill = "white")` [@bretsw](https://twitter.com/bretsw) | `r fa("globe", fill = "white")` [bretsw.com](http://bretsw.com)
